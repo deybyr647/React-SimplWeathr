@@ -10,7 +10,10 @@ const getCurrentWeather = (zip = 10001) => {
 
     fetch(endpoint)
         .then(res => res.json())
-        .then(data => console.log("Current Weather Data: \n", data))
+        .then(data => {
+            console.log("Current Weather Data: \n", data);
+            return data;
+        })
 }
 
 const getWeatherForecast = (zip = 10001) => {
@@ -18,7 +21,10 @@ const getWeatherForecast = (zip = 10001) => {
 
     fetch(endpoint)
         .then(res => res.json())
-        .then(data => console.log("Weather Forecast Data: \n", data))
+        .then(data => {
+            console.log("Weather Forecast Data: \n", data)
+            return data;
+        })
 }
 
 export {getCurrentWeather, getWeatherForecast};
