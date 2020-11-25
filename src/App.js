@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import {getCurrentWeather, getWeatherForecast} from './weather';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCloudSun, faSearch} from '@fortawesome/free-solid-svg-icons'
@@ -8,9 +7,6 @@ import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
-
-//getCurrentWeather();
-//getWeatherForecast();
 
 import Landing from './components/landing';
 import Forecast from './components/forecast';
@@ -30,15 +26,6 @@ const App = () => {
     setZip(e.target.value);
     console.log(zip);
   }
-
-  /*const fetchData2 = async () => {
-    await axios(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=${key}&lang=en&units=imperial`)
-      .then(res => {
-        setCurrentData(res.data);
-        console.log(currentData);
-        return res.data;
-      })
-  }*/
 
   const fetchData = async () => {
     const current = await axios(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=${key}&lang=en&units=imperial`);
@@ -83,7 +70,6 @@ const App = () => {
         </Nav>
         <Form inline onSubmit={submitHandler}>
           <FormControl type="text" placeholder="Enter Zip Code" className="mr-sm-2" name='zipcode' onChange={e => changeHandler(e)} autoComplete='off'/>
-          
         </Form>
       </Navbar>
 
