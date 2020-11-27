@@ -1,13 +1,16 @@
+import './landing.css';
 import { useState } from 'react';
-import {Container, Row, Col, Card, Jumbotron, Alert, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Container, Row, Col, Card, Jumbotron, Alert, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
+
+import {capitalizeStr} from '../../util';
 
 const LandingMessage = () => {
     const [alert, setAlert] = useState(true);
 
     return(
-        <Row as={Alert}>
+        <Row as={Alert} className='justify-content-center mx-auto'>
             <Col>
-                <Alert variant='primary' show={alert} dismissible onClose={() => setAlert(false)}>
+                <Alert variant='primary' show={alert} className='text-left' dismissible onClose={() => setAlert(false)}>
                     <Alert.Heading>Welcome To SimplWeather</Alert.Heading>
                     <p>Enter a zip code to get started...</p>
                 </Alert>
@@ -16,29 +19,28 @@ const LandingMessage = () => {
     )
 }
 
-const CurrentWeather = ({weatherObj}) => {
+const CurrentWeather = ({weatherObj, date}) => {
     return(
-        <Row>
-            <Col>
+        <Row className='justify-content-center'>
+            <Col xs={11} lg={5} xl={6} >
                 <Jumbotron>
-                    <h3 className='text-center'>City</h3>
+                    <h3 className='text-center pb-3'>{weatherObj.name}</h3>
 
-                    <Card>
-                        <Card.Img variant='top' src={null}/>
+                    <Card className='rounded text-center'>
+                        <Image width='40%' src={`https://openweathermap.org/img/wn/${weatherObj.weather[0].icon}@2x.png`} className='mx-auto'/>
                         <Card.Body>
-                            <Card.Title>Weather Desc</Card.Title>
-                            <Card.Text>Lorem Ipsum</Card.Text>
+                            <Card.Title>{capitalizeStr(weatherObj.weather[0].description)}</Card.Title>
 
                             <ListGroup className='list-group-flush'>
-                                <ListGroupItem>Weather</ListGroupItem>
-                                <ListGroupItem>Feels Like</ListGroupItem>
-                                <ListGroupItem>Humidity</ListGroupItem>
-                                <ListGroupItem>Pressure</ListGroupItem>
-                                <ListGroupItem>Max</ListGroupItem>
-                                <ListGroupItem>Min</ListGroupItem>
+                                <ListGroupItem>{parseInt(weatherObj.main.temp)} &deg;</ListGroupItem>
+                                <ListGroupItem>Feels Like {parseInt(weatherObj.main.feels_like)} &deg;</ListGroupItem>
+                                <ListGroupItem>Humidity: {weatherObj.main.humidity}%</ListGroupItem>
+                                <ListGroupItem>Pressure: {weatherObj.main.pressure} hPa</ListGroupItem>
+                                <ListGroupItem>Max: {parseInt(weatherObj.main.temp_max)} &deg;</ListGroupItem>
+                                <ListGroupItem>Min: {parseInt(weatherObj.main.temp_min)} &deg;</ListGroupItem>
                             </ListGroup>
 
-                            <Card.Footer>Updated a minute ago</Card.Footer>
+                            <Card.Footer>Updated {date}</Card.Footer>
                         </Card.Body>
                     </Card>
                 </Jumbotron>
@@ -47,12 +49,23 @@ const CurrentWeather = ({weatherObj}) => {
     )
 }
 
-const Landing = ({data}) => {
+const Loader = () => {
+    return(
+        <Row className='justify-content-center mx-auto'>
+            <Col>
+                <Jumbotron fluid>
+                    <Container className='loader'></Container>
+                </Jumbotron>
+            </Col>
+        </Row>
+    )
+}
 
+const Landing = ({data, dateStr}) => {
     return(
         <Container>
             <LandingMessage/>
-            <CurrentWeather/>
+            {data ? <CurrentWeather date={dateStr} weatherObj={data}/> : <Loader/>}
         </Container>
     )
 }
