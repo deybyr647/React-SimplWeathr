@@ -8,4 +8,17 @@ const capitalizeStr = (str) => {
     return splitStr.join(' ');
 }
 
-export {capitalizeStr};
+const timeConverter = (unixTimeStamp) => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const d = new Date(unixTimeStamp * 1000);
+
+    const year = d.getFullYear();
+    const month = months[d.getMonth()];
+    const date = d.getDate();
+
+    const out = `${month} ${date} ${year}`;
+    return out;
+}
+
+export {capitalizeStr, timeConverter};
