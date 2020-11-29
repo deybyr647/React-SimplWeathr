@@ -1,6 +1,5 @@
 import './landing.css';
-import { useState } from 'react';
-import {Container, Row, Col, Card, Jumbotron, Alert, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
+import {Container, Row, Col, Card, Jumbotron, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
 
 import {capitalizeStr} from '../../util';
 

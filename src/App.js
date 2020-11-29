@@ -1,4 +1,3 @@
-//import logo from './logo.svg';
 import './App.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,8 +16,6 @@ dotenv.config();
 const weatherKey = process.env.REACT_APP_OWM_API_KEY;
 const geocodeKey = process.env.REACT_APP_GMAPS_GEOCODE_API_KEY;
 
-//console.log("Gmaps Key", geocodeKey)
-
 const Message = ({title, text, ver}) => {
   const [alert, setAlert] = useState(true);
 
@@ -36,7 +33,7 @@ const Message = ({title, text, ver}) => {
 
 const App = () => {
 
-  const [zip, setZip] = useState('');
+  const [zip, setZip] = useState(null);
   const [currentData, setCurrentData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [city, setCity] = useState(null);
