@@ -14,7 +14,7 @@ const CurrentWeather = ({weatherObj, date}) => {
 
                             <ListGroup className='list-group-flush'>
                                 <ListGroupItem>Currently {parseInt(weatherObj.main.temp)} &deg;</ListGroupItem>
-                                <ListGroupItem>Feels Like {parseInt(weatherObj.main.feels_like)} &deg;</ListGroupItem>
+                                <ListGroupItem>Currently Feels Like {parseInt(weatherObj.main.feels_like)} &deg;</ListGroupItem>
                                 <ListGroupItem>Humidity: {weatherObj.main.humidity} %</ListGroupItem>
                                 <ListGroupItem>Pressure: {weatherObj.main.pressure} hPa</ListGroupItem>
                                 <ListGroupItem>Max: {parseInt(weatherObj.main.temp_max)} &deg;</ListGroupItem>

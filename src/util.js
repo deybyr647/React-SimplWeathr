@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Container, Row, Col, Jumbotron, Alert} from 'react-bootstrap';
+import {Container, Row, Col, Jumbotron, Alert, Nav} from 'react-bootstrap';
 
 const capitalizeStr = (str) => {
     let splitStr = str.toLowerCase().split(' ');
@@ -66,6 +66,16 @@ const Message = ({title, text, ver}) => {
             </Col>
         </Row>
     )
-  }
+}
 
-export {capitalizeStr, timeConverter, Loader, getAverageFromObj, Message};
+const Footer = () => {
+    return(
+        <Nav className='sticky-bottom justify-content-center bg-light'>
+            <Nav.Link href='https://deybyr647.com' target='_blank' rel='noopener noreferrer'>
+                &copy; 2020 | Deyby Rodriguez
+            </Nav.Link>
+        </Nav>
+    )
+}
+
+export {capitalizeStr, timeConverter, Loader, getAverageFromObj, Message, Footer};

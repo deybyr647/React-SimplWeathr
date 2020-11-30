@@ -10,7 +10,7 @@ import { lazy, Suspense, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 
-import {Loader, Message} from './util';
+import {Loader, Message, Footer} from './util';
 
 const Landing = lazy(() => import('./components/landing'));
 const Forecast = lazy(() => import('./components/forecast'));
@@ -69,19 +69,19 @@ const App = () => {
 
   return(
     <Router>
-      <Navbar bg="light" variant="light">
+      <Navbar bg="light" variant="light" className='sticky-top'>
         <Navbar.Brand as={Link} to='/' title='simplWeather'><FontAwesomeIcon icon={faCloudSun}/></Navbar.Brand>
         <Nav className="mr-auto">
           <Nav.Link as={Link} to='/forecast' className=''>Forecast</Nav.Link>
         </Nav>
         <Form inline onSubmit={submitHandler} className=''>
-          <FormControl type="text" id='input' placeholder="Enter Zip..." className="mr-sm-2" name='zipcode' onChange={e => changeHandler(e)} autoComplete='off'/>
+          <FormControl required type="zip" id='input' maxLength={9} minLength={5} pattern='[0-9]*' placeholder="Enter Zip..." className="mr-sm-2" name='zipcode' onChange={e => changeHandler(e)} autoComplete='off'/>
         </Form>
         <Button className='bg-info mx-1' type='button' onClick={submitHandler}><FontAwesomeIcon icon={faSync}/></Button>
         <Button className='bg-info' type='button' onClick={themeHandler}><FontAwesomeIcon icon={faMoon}/></Button>
       </Navbar>
 
-      <Message title='Welcome To SimplWeather' text='Enter a Zip Code To Get Started...' ver='primary'/>
+      <Message title='Welcome To SimplWeather' text='Enter a Zip Code To Get Started... (e.g. 10001)' ver='primary'/>
 
       <Switch>
         <Route exact path='/'>
@@ -101,7 +101,10 @@ const App = () => {
           </Suspense>
 
         </Route>
+
       </Switch>
+
+      <Footer/>
     </Router>
   )
 }
