@@ -2,37 +2,26 @@ import './App.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCloudSun, faSync, faMoon} from '@fortawesome/free-solid-svg-icons'
+
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-import {Nav, Navbar, Form, FormControl, Button, Alert, Row, Col} from 'react-bootstrap';
-import { useState } from 'react';
+import {Nav, Navbar, Form, FormControl, Button} from 'react-bootstrap';
+import { lazy, Suspense, useState } from 'react';
+
 import axios from 'axios';
 import moment from 'moment';
 
-import Landing from './components/landing';
-import Forecast from './components/forecast';
+import {Loader, Message} from './util';
+
+const Landing = lazy(() => import('./components/landing'));
+const Forecast = lazy(() => import('./components/forecast'));
 
 const dotenv = require('dotenv');
 dotenv.config();
+
 const weatherKey = process.env.REACT_APP_OWM_API_KEY;
 const geocodeKey = process.env.REACT_APP_GMAPS_GEOCODE_API_KEY;
 
-const Message = ({title, text, ver}) => {
-  const [alert, setAlert] = useState(true);
-
-  return(
-      <Row as={Alert} className='justify-content-center mx-auto my-0 py-0'>
-          <Col>
-              <Alert variant={ver} show={alert} className='text-left' dismissible onClose={() => setAlert(false)}>
-                  <Alert.Heading>{title}</Alert.Heading>
-                  <p>{text}</p>
-              </Alert>
-          </Col>
-      </Row>
-  )
-}
-
 const App = () => {
-
   const [zip, setZip] = useState(null);
   const [currentData, setCurrentData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
@@ -67,10 +56,6 @@ const App = () => {
     setCurrentData(() => current.data);
     setCity(() => current.data.name);
     setForecastData(() => forecast.data.daily);
-
-    console.log("Current (State)", currentData);
-    console.log("Forecast (State)", forecastData);
-    console.log("Coords (State)", coords);
   }
 
   const submitHandler = (e) => {
@@ -96,16 +81,25 @@ const App = () => {
         <Button className='bg-info' type='button' onClick={themeHandler}><FontAwesomeIcon icon={faMoon}/></Button>
       </Navbar>
 
+      <Message title='Welcome To SimplWeather' text='Enter a Zip Code To Get Started...' ver='primary'/>
+
       <Switch>
         <Route exact path='/'>
-          <Message title='Welcome To SimplWeather' text='Enter a Zip Code To Get Started...' ver='primary'/>
           <Message title='Showing Current Weather Data For...' text={city} ver='secondary'/>
-          <Landing data={currentData} dateStr={date}/>
+
+          <Suspense fallback={Loader}>
+            <Landing data={currentData} dateStr={date}/>
+          </Suspense>
+
         </Route>
 
         <Route path='/forecast'>
           <Message title='Showing Forecast Weather Data For...' text={city} ver='secondary'/>
-          <Forecast data={forecastData} dateStr={date}/>
+
+          <Suspense fallback={Loader}>
+            <Forecast data={forecastData} dateStr={date}/>
+          </Suspense>
+
         </Route>
       </Switch>
     </Router>

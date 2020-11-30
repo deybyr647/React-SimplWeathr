@@ -1,7 +1,6 @@
-import './landing.css';
 import {Container, Row, Col, Card, Jumbotron, ListGroup, ListGroupItem, Image} from 'react-bootstrap';
 
-import {capitalizeStr} from '../../util';
+import {capitalizeStr, Loader} from '../../util';
 
 const CurrentWeather = ({weatherObj, date}) => {
     return(
@@ -31,18 +30,6 @@ const CurrentWeather = ({weatherObj, date}) => {
     )
 }
 
-const Loader = () => {
-    return(
-        <Row className='justify-content-center mx-auto'>
-            <Col>
-                <Jumbotron fluid>
-                    <Container className='loader'></Container>
-                </Jumbotron>
-            </Col>
-        </Row>
-    )
-}
-
 const Landing = ({data, dateStr}) => {
     return(
         <Container>
@@ -52,4 +39,3 @@ const Landing = ({data, dateStr}) => {
 }
 
 export default Landing;
-export {Loader};

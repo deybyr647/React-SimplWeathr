@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import {Container, Row, Col, Jumbotron, Alert} from 'react-bootstrap';
+
 const capitalizeStr = (str) => {
     let splitStr = str.toLowerCase().split(' ');
 
@@ -21,4 +24,48 @@ const timeConverter = (unixTimeStamp) => {
     return out;
 }
 
-export {capitalizeStr, timeConverter};
+const getAverageFromObj = (obj) => {
+    let count = 0;
+    let amt = 0;
+    
+    //eslint-disable-next-line
+    for(const [key, value] of Object.entries(obj)){
+        count++;
+        amt += value;
+    }
+
+    let avg = amt / count;
+
+    return parseInt(avg);
+}
+
+const Loader = () => {
+    return(
+        <Container>
+            <Row className='justify-content-center mx-auto'>
+                <Col>
+                    <Jumbotron fluid>
+                        <Container className='loader'></Container>
+                    </Jumbotron>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
+
+const Message = ({title, text, ver}) => {
+    const [alert, setAlert] = useState(true);
+  
+    return(
+        <Row as={Alert} className='justify-content-center mx-auto my-0 py-0'>
+            <Col>
+                <Alert variant={ver} show={alert} className='text-left' dismissible onClose={() => setAlert(false)}>
+                    <Alert.Heading>{title}</Alert.Heading>
+                    <p>{text}</p>
+                </Alert>
+            </Col>
+        </Row>
+    )
+  }
+
+export {capitalizeStr, timeConverter, Loader, getAverageFromObj, Message};

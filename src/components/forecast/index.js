@@ -1,7 +1,5 @@
-import './forecast.css'
 import {Carousel, Image, Card, ListGroup, Container, Col, Row, ListGroupItem, Jumbotron} from 'react-bootstrap';
-import {Loader} from '../landing'
-import {capitalizeStr, timeConverter} from '../../util';
+import {capitalizeStr, timeConverter, Loader, getAverageFromObj} from '../../util';
 
 const DayForecastItem = ({weatherObj}) => {
     return(
@@ -11,8 +9,8 @@ const DayForecastItem = ({weatherObj}) => {
                 <Card.Title>{capitalizeStr(weatherObj.weather[0].description)}</Card.Title>
 
                 <ListGroup className='list-group-flush'>
-                    <ListGroupItem>Currently &deg;</ListGroupItem>
-                    <ListGroupItem>Feels Like  &deg;</ListGroupItem>
+                    <ListGroupItem>Avg. Temp {getAverageFromObj(weatherObj.temp)} &deg;</ListGroupItem>
+                    <ListGroupItem>Avg. Feels Like {getAverageFromObj(weatherObj.feels_like)} &deg;</ListGroupItem>
                     <ListGroupItem>Humidity: {weatherObj.humidity} %</ListGroupItem>
                     <ListGroupItem>Pressure: {weatherObj.pressure} hPa</ListGroupItem>
                     <ListGroupItem>Max: {parseInt(weatherObj.temp.max)} &deg;</ListGroupItem>
@@ -39,10 +37,10 @@ const Slideshow = ({dataArr}) => {
     )
 }
 
-const Forecast = ({data, dateStr}) => {
+const Forecast = ({data}) => {
     return(
-        <Container className='mt-5 pt-5'>
-            {data ? <Slideshow dataArr={data}></Slideshow> : <Loader/>}
+        <Container>
+            {data ? <Slideshow dataArr={data}/> : <Loader/>}
         </Container>
     )
 }
